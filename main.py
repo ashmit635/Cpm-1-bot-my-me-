@@ -739,7 +739,7 @@ class SyncCPMNuker:
 
 nuker = SyncCPMNuker()
 
-    def clone_account(self, target_uid: int, master_email: str, master_pass: str) -> Dict[str, Any]:
+def clone_account(self, target_uid: int, master_email: str, master_pass: str) -> Dict[str, Any]:
         """Clones money, coins, cars, vinyls, rank/levels, equipment, etc., from master_email to target_uid."""
         # 1. Master Account load aur decrypt karein
         master_auth_res = self.login(master_email, master_pass)
