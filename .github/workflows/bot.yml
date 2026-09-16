@@ -1,20 +1,17 @@
-name: CPM Telegram Bot Monitor
+name: Telegram Bot
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  monitor:
+  run-bot:
     runs-on: ubuntu-latest
 
     env:
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
     steps:
-      - name: Checkout bot
+      - name: Checkout
         uses: actions/checkout@v6
 
       - name: Setup Python
@@ -22,22 +19,12 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install requirements
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
 
-      - name: Check BOT_TOKEN
-        run: |
-          if [ -z "$BOT_TOKEN" ]; then
-            echo "❌ BOT_TOKEN secret is missing!"
-            exit 1
-          fi
-          echo "✅ BOT_TOKEN secret found."
-
-      - name: Check Python syntax
-        run: |
-          python -m py_compile main.py
-          echo "✅ main.py syntax is OK."
+      - name: Run bot
+        run: python main.py
